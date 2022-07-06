@@ -1,11 +1,32 @@
 <script setup>
-import { reactive, onMounted } from 'vue';
+import { ref, reactive, onMounted } from 'vue';
+import { onBeforeRouteLeave } from 'vue-router';
 import { auth, songsCollection } from '@/includes/firebase';
 import { query, where, getDocs } from 'firebase/firestore';
 import UploadSong from '@/components/UploadSong.vue';
 import SongModify from '@/components/SongModify.vue';
 
 const songs = reactive([]);
+const unsavedFlag = ref(false);
+
+onBeforeRouteLeave((to, from, next) => {
+  if (!unsavedFlag.value) {
+    next();
+  } else {
+    // eslint-disable-next-line no-restricted-globals, no-alert
+    const leave = confirm('有未修改的資料，確定要離開嗎?');
+    next(leave);
+  }
+});
+
+const uploadSong = (doc) => {
+  const song = {
+    ...doc.data(),
+    docID: doc.id,
+  };
+
+  songs.push(song);
+};
 
 const editSong = (index, { modifiedName, genre }) => {
   songs[index].modifiedName = modifiedName;
@@ -16,18 +37,18 @@ const deleteSong = (index) => {
   songs.splice(index, 1);
 };
 
+const updateUnsavedFlag = (value) => {
+  unsavedFlag.value = value;
+};
+
 onMounted(async () => {
-  const q = query(songsCollection, where('uid', '==', auth.currentUser.uid));
+  const q = query(
+    songsCollection,
+    where('uid', '==', auth.currentUser.uid),
+  );
   const snapshot = await getDocs(q);
 
-  snapshot.forEach((doc) => {
-    const song = {
-      ...doc.data(),
-      docID: doc.id,
-    };
-
-    songs.push(song);
-  });
+  snapshot.forEach(uploadSong);
 });
 </script>
 
@@ -36,7 +57,7 @@ onMounted(async () => {
   <section class="container mx-auto mt-6">
     <div class="md:grid md:grid-cols-3 md:gap-4">
       <div class="col-span-1">
-        <UploadSong />
+        <UploadSong @upload-song="uploadSong" />
       </div>
       <div class="col-span-2">
         <div class="bg-white rounded border border-gray-200 relative flex flex-col">
@@ -53,6 +74,7 @@ onMounted(async () => {
               :index="index"
               @edit-song="editSong"
               @delete-song="deleteSong"
+              @update-unsaved-flag="updateUnsavedFlag"
             />
           </div>
         </div>

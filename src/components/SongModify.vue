@@ -15,7 +15,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(['edit-song', 'delete-song']);
+const emit = defineEmits(['edit-song', 'delete-song', 'update-unsaved-flag']);
 
 const showEditForm = ref(false);
 const schema = reactive({
@@ -45,6 +45,7 @@ const editSong = async (values) => {
   }
 
   emit('edit-song', props.index, values);
+  emit('update-unsaved-flag', false);
 
   editSongInSubmission.value = false;
   editSongAlertVariant.value = 'bg-green-500';
@@ -105,6 +106,7 @@ const deleteSong = async () => {
             type="text"
             placeholder="Enter Song Title"
             name="modifiedName"
+            @input="$emit('update-unsaved-flag', true)"
           />
           <ErrorMessage
             class="text-red-600"
@@ -122,6 +124,7 @@ const deleteSong = async () => {
             type="text"
             placeholder="Enter Genre"
             name="genre"
+            @input="$emit('update-unsaved-flag', true)"
           />
           <ErrorMessage
             class="text-red-600"

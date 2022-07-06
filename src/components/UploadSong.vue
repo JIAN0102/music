@@ -1,10 +1,12 @@
 <script setup>
 import { ref, reactive, onUnmounted } from 'vue';
 import { auth, storage, songsCollection } from '@/includes/firebase';
-import { addDoc } from 'firebase/firestore';
+import { addDoc, getDoc } from 'firebase/firestore';
 import {
   ref as storageRef, uploadBytesResumable, getDownloadURL,
 } from 'firebase/storage';
+
+const emit = defineEmits(['upload-song']);
 
 const isDragOver = ref(false);
 const uploads = reactive([]);
@@ -54,8 +56,10 @@ const uploadFile = ($event) => {
         };
 
         song.url = await getDownloadURL(uploadTask.snapshot.ref);
-        await addDoc(songsCollection, song);
-        // await getDoc()
+        const songRef = await addDoc(songsCollection, song);
+        const songSnapshot = await getDoc(songRef);
+
+        emit('upload-song', songSnapshot);
 
         uploads[uploadIndex].variant = 'bg-green-400';
         uploads[uploadIndex].icon = 'fas fa-check';
