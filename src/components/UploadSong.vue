@@ -83,7 +83,6 @@ onUnmounted(() => {
       <i class="fas fa-upload float-right text-green-400 text-2xl" />
     </div>
     <div class="p-6">
-      <!-- Upload Dropbox -->
       <div
         class="w-full px-10 py-20 rounded text-center cursor-pointer border border-dashed border-gray-400 text-gray-400 transition duration-500 hover:text-white hover:bg-green-400 hover:border-green-400 hover:border-solid"
         :class="{ 'text-white bg-green-400 border-green-400 border-solid': isDragOver }"
@@ -101,13 +100,11 @@ onUnmounted(() => {
         @change="uploadFile($event)"
       >
       <hr class="my-6">
-      <!-- Progess Bars -->
       <div
         v-for="upload in uploads"
         :key="upload.name"
         class="mb-4"
       >
-        <!-- File Name -->
         <div
           class="font-bold text-sm"
           :class="upload.textClass"
@@ -115,7 +112,6 @@ onUnmounted(() => {
           <i :class="upload.icon" /> {{ upload.name }}
         </div>
         <div class="flex h-4 overflow-hidden bg-gray-200 rounded">
-          <!-- Inner Progress Bar -->
           <div
             class="transition-all progress-bar"
             :class="upload.variant"

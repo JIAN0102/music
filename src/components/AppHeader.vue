@@ -22,13 +22,11 @@ const logoutUser = async () => {
 </script>
 
 <template>
-  <!-- Header -->
   <header
     id="header"
     class="bg-gray-700"
   >
     <nav class="container mx-auto flex justify-start items-center py-5 px-4">
-      <!-- App Name -->
       <router-link
         class="text-white font-bold uppercase text-2xl mr-4"
         :to="{ name: 'home' }"
@@ -38,9 +36,7 @@ const logoutUser = async () => {
       </router-link>
 
       <div class="flex flex-grow items-center">
-        <!-- Primary Navigation -->
         <ul class="flex flex-row mt-1">
-          <!-- Navigation Links -->
           <li v-if="!isLoggedIn">
             <a
               class="px-2 text-white"

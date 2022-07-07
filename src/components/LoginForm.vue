@@ -46,7 +46,6 @@ const loginUser = async (values) => {
     :validation-schema="schema"
     @submit="loginUser"
   >
-    <!-- Email -->
     <div class="mb-3">
       <label
         class="inline-block mb-2"
@@ -64,7 +63,6 @@ const loginUser = async (values) => {
         name="email"
       />
     </div>
-    <!-- Password -->
     <div class="mb-3">
       <label
         class="inline-block mb-2"

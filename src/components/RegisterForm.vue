@@ -55,7 +55,6 @@ const registerUser = async (values) => {
     :initial-values="userData"
     @submit="registerUser"
   >
-    <!-- Name -->
     <div class="mb-3">
       <label
         class="inline-block mb-2"
@@ -73,7 +72,6 @@ const registerUser = async (values) => {
         name="name"
       />
     </div>
-    <!-- Email -->
     <div class="mb-3">
       <label
         class="inline-block mb-2"
@@ -91,7 +89,6 @@ const registerUser = async (values) => {
         name="email"
       />
     </div>
-    <!-- Age -->
     <div class="mb-3">
       <label
         class="inline-block mb-2"
@@ -108,7 +105,6 @@ const registerUser = async (values) => {
         name="age"
       />
     </div>
-    <!-- Password -->
     <div class="mb-3">
       <label
         class="inline-block mb-2"
@@ -135,7 +131,6 @@ const registerUser = async (values) => {
         </div>
       </VField>
     </div>
-    <!-- Confirm Password -->
     <div class="mb-3">
       <label
         class="inline-block mb-2"
@@ -153,7 +148,6 @@ const registerUser = async (values) => {
         name="confirmPassword"
       />
     </div>
-    <!-- Country -->
     <div class="mb-3">
       <label
         id="registerCountry"
@@ -183,7 +177,6 @@ const registerUser = async (values) => {
         name="country"
       />
     </div>
-    <!-- TOS -->
     <div class="mb-3 pl-6">
       <VField
         id="tos"

@@ -33,10 +33,8 @@ const editSong = async (values) => {
   editSongAlertVariant.value = 'bg-blue-500';
   editSongAlertMessage.value = '更新資料中，請燒等';
 
-  const docSongsCollection = doc(songsCollection, props.song.docID);
-
   try {
-    await updateDoc(docSongsCollection, values);
+    await updateDoc(doc(songsCollection, props.song.docID), values);
   } catch (error) {
     console.log(error);
     editSongInSubmission.value = false;
